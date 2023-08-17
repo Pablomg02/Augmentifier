@@ -38,15 +38,12 @@ archivos = os.listdir(inicial_images) #Lista de archivos en la carpeta inicial
 
 #ahora se recorren los archivos de la carpeta inicial y se guardan en la carpeta final
 for archivo in archivos:
-    image = cv2.imread(f"{inicial_images}/{archivo}") #Es mejor hacer esto directamente en la funcion de augmentator.py
-    try:
-        label = open(f"{inicial_labels}/{archivo[:-4]}.txt", 'r') #Es mejor hacer esto directamente en la funcion de augmentator.py
-    except: 
-        label = None
+    image_path = f"{inicial_images}/{archivo}" 
+    label_path = f"{inicial_labels}/{archivo[:-4]}.txt" #[:-4] para quitarle el .jpg al nombre del archivo
 
-    aug.savephoto(image, label, name = archivo[:-4], final_path = final, augments=5, exposure_maxfactor=1.8, saturation_maxfactor=1.8, hue_maxangle=20)
+    aug.savephoto(image_path, label_path, name = archivo[:-4], final_path = final, augments=5, exposure_maxfactor=1.8, saturation_maxfactor=1.8, hue_maxangle=20)
 
-    if label != None: label.close()
+    
 
 
 

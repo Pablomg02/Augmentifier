@@ -20,7 +20,12 @@ def aug_hue(image, maxangle):
     return cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
 
 
-def savephoto(image, label, name, final_path, augments=2, exposure=True, exposure_maxfactor=1.4, saturation=True, saturation_maxfactor=1.4, hue=True, hue_maxangle=10):
+def savephoto(image_path, label_path, name, final_path, augments=2, exposure=True, exposure_maxfactor=1.4, saturation=True, saturation_maxfactor=1.4, hue=True, hue_maxangle=10):
+    image = cv2.imread(image_path)
+    try:
+        label = open(label_path, 'r')
+    except:
+        label = None
 
     #Guardamos como _0 la imagen original
     os.chdir(f"{final_path}/images")
@@ -57,5 +62,6 @@ def savephoto(image, label, name, final_path, augments=2, exposure=True, exposur
             with open(f"{name}_{i+1}.txt", 'w') as f:
                 for linea in label_content:
                     f.write(linea + "\n")  
+            label.close()
         os.chdir("..")
         os.chdir("..")
