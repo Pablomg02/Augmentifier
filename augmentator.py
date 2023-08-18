@@ -31,6 +31,12 @@ def aug_yflip(image, prob):
     else:
         return image
 
+def getlabel(label):
+    label_content = []
+    for linea in label:
+        label_content.append(linea.strip())
+    return label_content
+
 
 def savephoto(image_path, label_path, name, final_path, augments=2, exposure=True, exposure_maxfactor=1.4, saturation=True, saturation_maxfactor=1.4, hue=True, hue_maxangle=10, xflip = True, xflip_prob = 0.5, yflip = True, yflip_prob = 0.5):
     image = cv2.imread(image_path)
@@ -44,9 +50,7 @@ def savephoto(image_path, label_path, name, final_path, augments=2, exposure=Tru
     cv2.imwrite(f"{name}_0.jpg", image)
 
     if label != None:
-        label_content = []
-        for linea in label:
-            label_content.append(linea.strip())
+        label_content = getlabel(label)
         os.chdir("..")
         os.chdir("labels")
         with open(f"{name}_0.txt", 'w') as f:
@@ -71,14 +75,19 @@ def savephoto(image_path, label_path, name, final_path, augments=2, exposure=Tru
         if yflip:
             image_mod = aug_yflip(image_mod, yflip_prob)
 
+        #Now that we have the modified image, we save it
         os.chdir(f"{final_path}/images")
         cv2.imwrite(f"{name}_{i+1}.jpg", image_mod)
+
+        #If the label already exists, we save it too
         if label != None:
-            os.chdir("..")
-            os.chdir("labels")
-            with open(f"{name}_{i+1}.txt", 'w') as f:
-                for linea in label_content:
-                    f.write(linea + "\n")  
+            if label_content != []:
+                os.chdir("..")
+                os.chdir("labels")
+                with open(f"{name}_{i+1}.txt", 'w') as f:
+                    for linea in label_content:
+                        f.write(linea + "\n")  
+            #Now that we finished with the label, we close it
             label.close()
         os.chdir("..")
         os.chdir("..")
