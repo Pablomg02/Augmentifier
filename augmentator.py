@@ -19,8 +19,20 @@ def aug_hue(image, maxangle):
     hsv[:,:, 0] = np.clip(hsv[:,:, 0] + angle, 0, 180)
     return cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
 
+def aug_xflip(image, prob):
+    if random.random()<prob:
+        return cv2.flip(image,0)
+    else:
+        return image
+    
+def aug_yflip(image, prob):
+    if random.random()<prob:
+        return cv2.flip(image,1)
+    else:
+        return image
 
-def savephoto(image_path, label_path, name, final_path, augments=2, exposure=True, exposure_maxfactor=1.4, saturation=True, saturation_maxfactor=1.4, hue=True, hue_maxangle=10):
+
+def savephoto(image_path, label_path, name, final_path, augments=2, exposure=True, exposure_maxfactor=1.4, saturation=True, saturation_maxfactor=1.4, hue=True, hue_maxangle=10, xflip = True, xflip_prob = 0.5, yflip = True, yflip_prob = 0.5):
     image = cv2.imread(image_path)
     try:
         label = open(label_path, 'r')
@@ -54,6 +66,11 @@ def savephoto(image_path, label_path, name, final_path, augments=2, exposure=Tru
             image_mod = aug_sat(image_mod, saturation_maxfactor)
         if hue:
             image_mod = aug_hue(image_mod, hue_maxangle)
+        if xflip:
+            image_mod = aug_xflip(image_mod, xflip_prob)
+        if yflip:
+            image_mod = aug_yflip(image_mod, yflip_prob)
+
         os.chdir(f"{final_path}/images")
         cv2.imwrite(f"{name}_{i+1}.jpg", image_mod)
         if label != None:
