@@ -14,13 +14,13 @@ def finaldir(final):
 
 #========PRINTS DE INICIO========#
 print("\n\n\n=============================================")
-print("Este programa tiene como utilidad generar imágenes modificadas para aumentar el Dataset de entrenamiento")
-print("El nombre de la carpeta raiz es a elección del usuario, pero debe contener las imágenes en la carpeta 'images' y las etiquetas en la carpeta 'labels'")
+print("Welcome to AUGMENTATOR. You can augment your images and labels with this program.")
+print("You can select which folder you want to augment, but it must have a folder called 'images' and another called 'labels' inside it.")
 print("=============================================\n\n")
 
 
 #========INPUTS========#
-inicial = input("Ingrese el nombre de la carpeta donde se encuentran las imagenes y las etiquetas: ") #Carpeta donde se encuentran las imagenes sin tratar
+inicial = input("Introduce the main folder name: ") #Carpeta donde se encuentran las imagenes sin tratar
 final = f"{inicial}_augmented" #Carpeta donde se guardaran las imagenes tratadas
 
 inicial_images = f"{inicial}/images" #Carpeta donde se encuentran las imagenes sin tratar
@@ -34,14 +34,14 @@ final_labels = f"{final}/labels" #Carpeta donde se guardaran las etiquetas trata
 # Crear carpeta final
 finaldir(final) #creacion de carpeta final
 
-archivos = os.listdir(inicial_images) #Lista de archivos en la carpeta inicial
+files = os.listdir(inicial_images) #Lista de archivos en la carpeta inicial
 
 #ahora se recorren los archivos de la carpeta inicial y se guardan en la carpeta final
-for archivo in archivos:
-    image_path = f"{inicial_images}/{archivo}" 
-    label_path = f"{inicial_labels}/{archivo[:-4]}.txt" #[:-4] para quitarle el .jpg al nombre del archivo
+for file in files:
+    image_path = f"{inicial_images}/{file}" 
+    label_path = f"{inicial_labels}/{file[:-4]}.txt" #[:-4] para quitarle el .jpg al nombre del archivo
 
-    aug.savephoto(image_path, label_path, name = archivo[:-4], final_path = final, augments=5)
+    aug.savephoto(image_path, label_path, name = file[:-4], final_path = final, augments=5)
 
     
 
