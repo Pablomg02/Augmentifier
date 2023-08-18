@@ -41,7 +41,7 @@ for archivo in archivos:
     image_path = f"{inicial_images}/{archivo}" 
     label_path = f"{inicial_labels}/{archivo[:-4]}.txt" #[:-4] para quitarle el .jpg al nombre del archivo
 
-    aug.savephoto(image_path, label_path, name = archivo[:-4], final_path = final, augments=5, exposure_maxfactor=1.8, saturation_maxfactor=1.8, hue_maxangle=20)
+    aug.savephoto(image_path, label_path, name = archivo[:-4], final_path = final, augments=5)
 
     
 
