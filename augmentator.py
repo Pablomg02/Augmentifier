@@ -37,6 +37,15 @@ def blur(image, maxvalue):
         value += 1
     return cv2.blur(image,(value,value))
 
+def grayscale(image, prob):
+    if random.random()<prob:
+        return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    else:
+        return image
+
+
+
+
 def getlabel(label):
     label_content = []
     for linea in label:
@@ -44,7 +53,7 @@ def getlabel(label):
     return label_content
 
 
-def savephoto(image_path, label_path, name, final_path, augments=2, do_exposure=True, exposure_maxfactor=1.4, do_saturation=True, saturation_maxfactor=1.4, do_hue=True, hue_maxangle=10, do_xflip = True, xflip_prob = 0.5, do_yflip = True, yflip_prob = 0.5, do_blur= True, blur_maxvalue = 9):
+def savephoto(image_path, label_path, name, final_path, augments=3, do_exposure=True, exposure_maxfactor=1.4, do_saturation=True, saturation_maxfactor=1.4, do_hue=True, hue_maxangle=10, do_xflip = True, xflip_prob = 0.5, do_yflip = True, yflip_prob = 0.5, do_blur= True, blur_maxvalue = 9, do_grayscale = True, grayscale_prob = 0.1):
     image = cv2.imread(image_path)
     try:
         label = open(label_path, 'r')
@@ -82,6 +91,8 @@ def savephoto(image_path, label_path, name, final_path, augments=2, do_exposure=
             image_mod = yflip(image_mod, yflip_prob)
         if do_blur:
             image_mod = blur(image_mod, blur_maxvalue)
+        if do_grayscale:
+            image_mod = grayscale(image_mod, grayscale_prob)
 
         #Now that we have the modified image, we save it
         os.chdir(f"{final_path}/images")
