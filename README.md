@@ -9,13 +9,13 @@ For now, you can use the following features:
 - **Hue**
 - **X Flip**
 - **Y Flip**
+- **Blur**
+- **Gray scale**
 
 The following features will be available soon:
 - **Scaling and cropping**
 - **Rotation**
 - **Noise**
-- **Blur**
-- **Gray scale**
 - *And many more!* Other features are being explored, such as the use of **Generative Adversarial Networks** to create new images.
 
 The repository is in a very early stage, so many changes and features will arrive in a very short time!
