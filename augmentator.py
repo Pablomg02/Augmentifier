@@ -30,6 +30,12 @@ def yflip(image, prob):
         return cv2.flip(image,1)
     else:
         return image
+    
+def blur(image, maxvalue):
+    value = random.randint(1,maxvalue)
+    if value % 2 == 0:
+        value += 1
+    return cv2.blur(image,(value,value))
 
 def getlabel(label):
     label_content = []
@@ -38,7 +44,7 @@ def getlabel(label):
     return label_content
 
 
-def savephoto(image_path, label_path, name, final_path, augments=2, do_exposure=True, exposure_maxfactor=1.4, do_saturation=True, saturation_maxfactor=1.4, do_hue=True, hue_maxangle=10, do_xflip = True, xflip_prob = 0.5, do_yflip = True, yflip_prob = 0.5):
+def savephoto(image_path, label_path, name, final_path, augments=2, do_exposure=True, exposure_maxfactor=1.4, do_saturation=True, saturation_maxfactor=1.4, do_hue=True, hue_maxangle=10, do_xflip = True, xflip_prob = 0.5, do_yflip = True, yflip_prob = 0.5, do_blur= True, blur_maxvalue = 9):
     image = cv2.imread(image_path)
     try:
         label = open(label_path, 'r')
@@ -74,6 +80,8 @@ def savephoto(image_path, label_path, name, final_path, augments=2, do_exposure=
             image_mod = xflip(image_mod, xflip_prob)
         if do_yflip:
             image_mod = yflip(image_mod, yflip_prob)
+        if do_blur:
+            image_mod = blur(image_mod, blur_maxvalue)
 
         #Now that we have the modified image, we save it
         os.chdir(f"{final_path}/images")
