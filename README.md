@@ -1,3 +1,6 @@
+> **Note**  
+> This project is closed and left public for a reason. It is an excellent example of what we humans used to do before AI. I'm embarrassed to look at this repository.
+
 # Augmentifier
 An Augmented Dataset generator, currently under development for YOLO algorythm data structure.
 
